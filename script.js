@@ -12,20 +12,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar styling on scroll
-const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-    } else {
-        navbar.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-    }
-});
-
 // Intersection Observer for fade-in animations
 const observerOptions = {
     threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver(entries => {
@@ -37,9 +27,9 @@ const observer = new IntersectionObserver(entries => {
     });
 }, observerOptions);
 
-// Observe all cards and timeline items
+// Observe stack cards and project items
 document.querySelectorAll(
-    '.skill-category, .timeline-item, .project-card, .education-item, .contact-method'
+    '.stack-card, .project-item, .contact-method'
 ).forEach(element => {
     element.style.opacity = '0';
     element.style.transform = 'translateY(20px)';
@@ -62,40 +52,14 @@ window.addEventListener('scroll', () => {
     });
 
     navLinks.forEach(link => {
-        link.style.color = 'var(--text-dark)';
+        link.classList.remove('active');
         if (link.getAttribute('href').slice(1) === current) {
-            link.style.color = 'var(--primary-color)';
+            link.style.color = 'var(--text-dark)';
+            link.style.fontWeight = '600';
+        } else {
+            link.style.color = 'var(--text-light)';
+            link.style.fontWeight = '400';
         }
-    });
-});
-
-// Animate skill tags on hover
-document.querySelectorAll('.skill-tag').forEach(tag => {
-    tag.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.1) rotate(2deg)';
-    });
-    tag.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1) rotate(0deg)';
-    });
-});
-
-// Add ripple effect on button clicks
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-
-        this.appendChild(ripple);
-
-        setTimeout(() => ripple.remove(), 600);
     });
 });
 
